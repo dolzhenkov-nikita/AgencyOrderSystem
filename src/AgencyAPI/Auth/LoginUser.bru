@@ -1,0 +1,36 @@
+meta {
+  name: LoginUser
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/api/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "test@test.com",
+    "password": "Qwer1234!"
+  }
+}
+
+script:pre-request {
+  function afterResponse(req, res) {
+      const data = JSON.parse(res.body);
+      bru.environment.set("token", data.token);
+  }
+  
+}
+
+script:post-response {
+    console.log('Success: Token saved to environment');
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

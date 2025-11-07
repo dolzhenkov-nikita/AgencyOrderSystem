@@ -1,0 +1,25 @@
+meta {
+  name: RegisterUser
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/api/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name":"TestUser",
+    "email":"test@test.com",
+    "password":"Qwer1234!",
+    "password_confirmation":"Qwer1234!"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
