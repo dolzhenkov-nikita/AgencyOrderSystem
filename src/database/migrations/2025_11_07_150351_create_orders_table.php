@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,8 +13,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("description");
+            $table->string("description")->nullable();
+            $table->enum("status", ["new", "processing", "completed", "canceled"])->default("new");
             $table->foreignId("user_id")->constrained()->cascadeOnUpdate(); // маловероятно обновление id, но каскадное обновление
+            $table->integer("total_price");
             $table->timestamps();
         });
     }
