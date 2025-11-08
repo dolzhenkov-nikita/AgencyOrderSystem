@@ -16,8 +16,9 @@ Thumbs.db
 .env.production
 .env.example
 
-/vendor/
-/node_modules/
+# Vendor directories - УБЕРИТЕ ./vendor и оставьте только это:
+vendor/
+node_modules/
 src/vendor/
 
 .phpunit.result.cache
