@@ -5,6 +5,9 @@ use App\Containers\Order\Controllers\GetOrderController;
 use App\Containers\Order\Controllers\ListOrderController;
 use App\Containers\Order\Controllers\UpdateOrderStatusController;
 use App\Containers\Product\Controllers\CreateProductController;
+use App\Containers\Product\Controllers\DeleteProductController;
+use App\Containers\Product\Controllers\GetProductController;
+use App\Containers\Product\Controllers\ListProductController;
 use App\Containers\Product\Controllers\UpdateProductController;
 use App\Containers\User\Controllers\Auth\LoginController;
 use App\Containers\User\Controllers\Auth\LogoutController;
@@ -19,11 +22,16 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', RegisterController::class);
 Route::post('/login', LoginController::class);
 
+Route::get("/products", ListProductController::class);
+Route::get('/products/{product}', GetProductController::class);
+
+
 Route::middleware("auth:sanctum")->group(function () {
     Route::post("/logout", LogoutController::class);
 
     Route::post("/products", CreateProductController::class);
     Route::put("/products/{product}", UpdateProductController::class);
+    Route::delete("/products/{product}", DeleteProductController::class);
 
     Route::post("/orders", CreateOrderController::class);
     Route::get("/orders", ListOrderController::class);
