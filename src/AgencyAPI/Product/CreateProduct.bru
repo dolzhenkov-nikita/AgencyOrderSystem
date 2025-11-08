@@ -1,0 +1,28 @@
+meta {
+  name: CreateProduct
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/api/products
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "fProduct",
+    "description": "description",
+    "price": 123
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

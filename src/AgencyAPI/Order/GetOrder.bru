@@ -1,0 +1,20 @@
+meta {
+  name: GetOrder
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{url}}/api/orders/2
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
