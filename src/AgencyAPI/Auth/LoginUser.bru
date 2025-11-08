@@ -17,17 +17,11 @@ body:json {
   }
 }
 
-script:pre-request {
-  function afterResponse(req, res) {
-      const data = JSON.parse(res.body);
-      bru.environment.set("token", data.token);
-  }
-  
-}
-
 script:post-response {
-    console.log('Success: Token saved to environment');
-  
+  let data = res.getBody();
+  if (data.token) {
+      bru.setEnvVar("token", data.token)
+  }
 }
 
 settings {

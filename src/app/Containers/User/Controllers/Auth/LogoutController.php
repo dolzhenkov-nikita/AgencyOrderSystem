@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Containers\User\Controllers\Auth;
 
+use App\Containers\User\Requests\Auth\LogoutRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LogoutRequest;
 
 class LogoutController extends Controller
 {
