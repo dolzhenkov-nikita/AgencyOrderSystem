@@ -30,6 +30,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereStatus($value)
  * @property int $total_price
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereTotalPrice($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Containers\Order\Models\OrderProduct> $products
+ * @property-read int|null $products_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order forCurrentUser()
  * @mixin \Eloquent
  */
 class Order extends Model
@@ -86,6 +89,36 @@ class Order extends Model
     public function setUserId(int $user_id): void
     {
         $this->user_id = $user_id;
+    }
+
+    public function getCreatedAt(): ?\Illuminate\Support\Carbon
+    {
+        return $this->created_at;
+    }
+
+    public function getUpdatedAt(): ?\Illuminate\Support\Carbon
+    {
+        return $this->updated_at;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function getTotalPrice(): int
+    {
+        return $this->total_price;
+    }
+
+    public function setTotalPrice(int $total_price): void
+    {
+        $this->total_price = $total_price;
     }
 
 }

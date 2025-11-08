@@ -30,7 +30,7 @@ class Product extends Model
         "description",
         "cost",
     ];
-    protected $casts=[
+    protected $casts = [
 
     ];
 
@@ -63,5 +63,16 @@ class Product extends Model
     {
         $this->cost = $cost;
     }
+
+    public function getCreatedAt(): ?\Illuminate\Support\Carbon
+    {
+        return $this->created_at;
+    }
+
+    public function getUpdatedAt(): ?\Illuminate\Support\Carbon
+    {
+        return $this->updated_at;
+    }
+
 
 }

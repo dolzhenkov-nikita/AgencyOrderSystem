@@ -4,12 +4,15 @@ namespace App\Containers\Order\Actions;
 
 use App\Containers\Order\Models\Order;
 use App\Containers\Order\Tasks\CreateOrderProductsTask;
+use App\Containers\Order\Tasks\SendOrderNotificationTask;
 use App\Enums\StatusEnum;
 
 class CreateOrderAction
 {
     public function __construct(
-        private CreateOrderProductsTask $createOrderProductsTask
+        private CreateOrderProductsTask   $createOrderProductsTask,
+        private SendOrderNotificationTask $sendOrderNotificationTask
+
     )
     {
     }
@@ -29,6 +32,7 @@ class CreateOrderAction
 
         // Обновляем общую сумму
         $order->update(['total_price' => $totalAmount]);
+        $this->sendOrderNotificationTask->execute($order);
 
         return $order->load('products.product');
     }

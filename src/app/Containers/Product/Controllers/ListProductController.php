@@ -3,13 +3,16 @@
 namespace App\Containers\Product\Controllers;
 
 use App\Containers\Product\Actions\ListProductsAction;
+use App\Containers\Product\Transformers\ProductTransformer;
 use App\Http\Controllers\Controller;
+use App\Services\FractalService;
 use Illuminate\Http\Request;
 
 class ListProductController extends Controller
 {
     public function __construct(
-        private readonly ListProductsAction $listProductsAction
+        private readonly ListProductsAction $listProductsAction,
+        private FractalService              $fractal
     )
     {
     }
@@ -21,7 +24,7 @@ class ListProductController extends Controller
     {
         $products = $this->listProductsAction->run($request->all());
         return response()->json([
-            'products' => $products,
+            $this->fractal->paginate($products, new ProductTransformer(), 'products'),
         ]);
     }
 }

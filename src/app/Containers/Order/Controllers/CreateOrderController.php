@@ -4,7 +4,9 @@ namespace App\Containers\Order\Controllers;
 
 use App\Containers\Order\Actions\CreateOrderAction;
 use App\Containers\Order\Requests\CreateOrderRequest;
+use App\Containers\Order\Transformers\OrderTransformer;
 use App\Http\Controllers\Controller;
+use App\Services\FractalService;
 use Illuminate\Http\JsonResponse;
 
 class CreateOrderController extends Controller
@@ -13,8 +15,11 @@ class CreateOrderController extends Controller
      * Handle the incoming request.
      */
     public function __construct(
-        private readonly CreateOrderAction $createOrderAction
-    ) {}
+        private readonly CreateOrderAction $createOrderAction,
+        private FractalService             $fractal
+    )
+    {
+    }
 
     public function __invoke(CreateOrderRequest $request): JsonResponse
     {
@@ -24,8 +29,7 @@ class CreateOrderController extends Controller
         );
 
         return response()->json([
-            'message' => 'Заказ успешно создан',
-            'order' => $order,
+            $this->fractal->item($order, new OrderTransformer(), 'orders')
         ], 201);
     }
 }
