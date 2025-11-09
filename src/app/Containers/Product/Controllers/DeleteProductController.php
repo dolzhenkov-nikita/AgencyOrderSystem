@@ -5,6 +5,7 @@ namespace App\Containers\Product\Controllers;
 use App\Containers\Product\Actions\DeleteProductAction;
 use App\Containers\Product\Models\Product;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 
 class DeleteProductController extends Controller
 {
@@ -17,7 +18,7 @@ class DeleteProductController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Product $product)
+    public function __invoke(Product $product): JsonResponse
     {
         if (auth()->user()->isAdmin()) {
             $this->deleteProductAction->run($product);

@@ -7,6 +7,5 @@ class CreateProductAction
     public function run(array $data):Product
     {
         return Product::create($data);
-
     }
 }
