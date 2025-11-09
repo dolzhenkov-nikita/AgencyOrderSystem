@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +101,7 @@ return [
 
     'previous_keys' => [
         ...array_filter(
-            explode(',', (string) env('APP_PREVIOUS_KEYS', ''))
+            explode(',', (string)env('APP_PREVIOUS_KEYS', ''))
         ),
     ],
 
@@ -122,5 +122,9 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
+    'admin' => [
+        'name' => env('ADMIN_NAME', 'Admin'),
+        'email' => env('ADMIN_EMAIL', 'admin@example.com'),
+        'password' => env('ADMIN_PASSWORD', 'password'),
+    ],
 ];

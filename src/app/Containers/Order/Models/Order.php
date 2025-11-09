@@ -2,10 +2,11 @@
 
 namespace App\Containers\Order\Models;
 
+use App\Containers\Product\Models\Product;
 use App\Containers\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
@@ -56,9 +57,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function products(): HasMany
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(OrderProduct::class);
+        return $this->belongsToMany(Product::class, 'order_product')
+            ->withPivot('quantity', 'total_price')
+            ->withTimestamps();
     }
 
     public function getName(): string
