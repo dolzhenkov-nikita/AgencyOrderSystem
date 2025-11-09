@@ -19,9 +19,15 @@ class DeleteProductController extends Controller
      */
     public function __invoke(Product $product)
     {
-        $this->deleteProductAction->run($product);
+        if (auth()->user()->isAdmin()) {
+            $this->deleteProductAction->run($product);
+            return response()->json([
+                'message' => 'Продукт успешно удален',
+            ]);
+        }
+
         return response()->json([
-            'message' => 'Продукт успешно удален',
-        ]);
+            "message" => "Недостаточно прав для удаления продукта"
+        ], 403);
     }
 }
