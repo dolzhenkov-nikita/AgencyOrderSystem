@@ -2,7 +2,9 @@
 
 namespace App\Containers\Order\Controllers;
 
+use App\Containers\Order\Actions\ListOrderAction;
 use App\Containers\Order\Models\Order;
+use App\Containers\Order\Requests\ListOrderRequest;
 use App\Containers\Order\Transformers\OrderTransformer;
 use App\Http\Controllers\Controller;
 use App\Services\FractalService;
@@ -12,7 +14,8 @@ use Illuminate\Http\Request;
 class ListOrderController extends Controller
 {
     public function __construct(
-        private FractalService $fractal
+        private FractalService $fractal,
+        private ListOrderAction $action
     )
     {
     }
@@ -20,12 +23,9 @@ class ListOrderController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(ListOrderRequest $request): JsonResponse
     {
-        $orders = Order::forCurrentUser()
-            ->with(['products'])
-            ->orderBy('created_at', 'desc')
-            ->paginate($request->get('per_page', 15));
+        $orders = $this->action->run($request);
 
         return response()->json([
             $this->fractal
