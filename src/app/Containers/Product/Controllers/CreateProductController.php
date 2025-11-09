@@ -7,6 +7,7 @@ use App\Containers\Product\Requests\CreateProductRequest;
 use App\Containers\Product\Transformers\ProductTransformer;
 use App\Http\Controllers\Controller;
 use App\Services\FractalService;
+use Illuminate\Http\JsonResponse;
 
 class CreateProductController extends Controller
 {
@@ -17,12 +18,12 @@ class CreateProductController extends Controller
     {
     }
 
-    public function __Invoke(CreateProductRequest $request)
+    public function __Invoke(CreateProductRequest $request): JsonResponse
     {
         $product = $this->createProductAction->run($request->validated());
 
-        return response()->json([
+        return response()->json(
             $this->fractal->item($product, new ProductTransformer(), 'product')
-        ], 201);
+            , 201);
     }
 }
