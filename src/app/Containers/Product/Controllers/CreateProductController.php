@@ -23,6 +23,6 @@ class CreateProductController extends Controller
 
         return response()->json([
             $this->fractal->item($product, new ProductTransformer(), 'product')
-        ], 200);
+        ], 201);
     }
 }
