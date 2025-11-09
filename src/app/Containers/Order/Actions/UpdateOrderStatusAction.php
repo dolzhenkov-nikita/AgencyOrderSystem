@@ -20,6 +20,9 @@ class UpdateOrderStatusAction
     {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function run(Order $order, string $status): Order
     {
         try {
