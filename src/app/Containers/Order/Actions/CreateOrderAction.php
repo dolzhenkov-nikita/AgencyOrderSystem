@@ -19,7 +19,6 @@ class CreateOrderAction
 
     public function run(array $orderData, int $userId): Order
     {
-        // Создаем заказ
         $order = Order::create([
             'name' => "Заказ от " . now(),
             'user_id' => $userId,
@@ -27,13 +26,11 @@ class CreateOrderAction
             'total_price' => 0,
         ]);
 
-        // Создаем элементы заказа
         $totalAmount = $this->createOrderProductsTask->run($order, $orderData['products']);
 
-        // Обновляем общую сумму
         $order->update(['total_price' => $totalAmount]);
         $this->sendOrderNotificationTask->execute($order);
 
-        return $order->load('products.product');
+        return $order->load('products');
     }
 }

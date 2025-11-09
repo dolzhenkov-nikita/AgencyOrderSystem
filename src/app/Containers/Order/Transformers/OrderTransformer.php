@@ -10,7 +10,7 @@ class OrderTransformer extends Transformer
 {
     protected array $availableIncludes = [
         'user',
-        'items'
+        'products'
     ];
 
     public function transform(Order $order): array
@@ -29,8 +29,8 @@ class OrderTransformer extends Transformer
         return $this->item($order->user, new UserTransformer());
     }
 
-    public function includeItems(Order $order): \League\Fractal\Resource\Collection
+    public function includeProducts(Order $order): \League\Fractal\Resource\Collection
     {
-        return $this->collection($order->items, new OrderProductTransformer());
+        return $this->collection($order->products, new OrderProductTransformer());
     }
 }

@@ -17,9 +17,7 @@ class CreateOrderProductsTask
             $quantity = $productData['quantity'];
             $itemTotal = $product->getCost() * $quantity;
 
-            // Создаем элемент заказа
-            $order->products()->create([
-                'product_id' => $product->id,
+            $order->products()->attach($product->getKey(),[
                 'quantity' => $quantity,
                 'total_price' => $itemTotal,
             ]);

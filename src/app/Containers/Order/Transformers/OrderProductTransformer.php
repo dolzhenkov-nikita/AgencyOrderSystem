@@ -3,6 +3,7 @@
 namespace App\Containers\Order\Transformers;
 
 use App\Containers\Order\Models\OrderProduct;
+use App\Containers\Product\Models\Product;
 use App\Containers\Product\Transformers\ProductTransformer;
 use App\Transformers\Transformer;
 
@@ -12,17 +13,15 @@ class OrderProductTransformer extends Transformer
         'product'
     ];
 
-    public function transform(OrderProduct $orderProduct): array
+    public function transform(Product $product): array
     {
         return [
-            'id' => $orderProduct->getKey(),
-            'quantity' => $orderProduct->getQuantity(),
-            'total_price' => $orderProduct->getTotalPrice(),
+            'id' => $product->getKey(),
+            'name' => $product->getName(),
+            'cost' => $product->getCost(),
+            'description' => $product->getDescription(),
+            'quantity' => $product->pivot->quantity,
+            'item_total' => $product->pivot->total_price,
         ];
-    }
-
-    public function includeProduct(OrderProduct $orderProduct): \League\Fractal\Resource\Item
-    {
-        return $this->item($orderProduct->product, new ProductTransformer());
     }
 }

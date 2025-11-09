@@ -23,12 +23,14 @@ class ListOrderController extends Controller
     public function __invoke(Request $request): JsonResponse
     {
         $orders = Order::forCurrentUser()
-            ->with(['products.product'])
+            ->with(['products'])
             ->orderBy('created_at', 'desc')
             ->paginate($request->get('per_page', 15));
 
         return response()->json([
-            $this->fractal->paginate($orders, new OrderTransformer(), 'orders')
+            $this->fractal
+                ->withIncludes(['products'])
+                ->paginate($orders, new OrderTransformer(), 'orders')
         ]);
     }
 }

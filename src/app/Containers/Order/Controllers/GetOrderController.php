@@ -28,10 +28,12 @@ class GetOrderController extends Controller
             ], 404);
         }
 
-        $order->load(['products.product', 'user']);
+        $order->load(['products', 'user']);
 
-        return response()->json([
-            $this->fractal->item($order, OrderTransformer::class)
-        ]);
+        return response()->json(
+            $this->fractal
+                ->withIncludes(['products'])
+                ->item($order, new OrderTransformer())
+        );
     }
 }

@@ -29,7 +29,9 @@ class CreateOrderController extends Controller
         );
 
         return response()->json([
-            $this->fractal->item($order, new OrderTransformer(), 'orders')
+            $this->fractal
+                ->withIncludes(['products'])
+                ->item($order, new OrderTransformer(), 'orders')
         ], 201);
     }
 }

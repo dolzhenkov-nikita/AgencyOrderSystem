@@ -40,4 +40,10 @@ class FractalService
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
         return $this->fractal->createData($resource)->toArray();
     }
+
+    public function withIncludes(array $includes): self
+    {
+        $this->fractal->parseIncludes(implode(',', $includes));
+        return $this;
+    }
 }
