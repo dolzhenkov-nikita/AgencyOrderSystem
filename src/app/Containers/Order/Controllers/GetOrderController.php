@@ -2,7 +2,9 @@
 
 namespace App\Containers\Order\Controllers;
 
+use App\Containers\Order\Actions\GetOrderAction;
 use App\Containers\Order\Models\Order;
+use App\Containers\Order\Requests\GetOrderRequest;
 use App\Containers\Order\Transformers\OrderTransformer;
 use App\Http\Controllers\Controller;
 use App\Services\FractalService;
@@ -12,7 +14,8 @@ use Illuminate\Http\Request;
 class GetOrderController extends Controller
 {
     public function __construct(
-        private FractalService $fractal
+        private FractalService $fractal,
+        private GetOrderAction $action
     )
     {
     }
@@ -20,15 +23,9 @@ class GetOrderController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, Order $order): JsonResponse
+    public function __invoke(GetOrderRequest $request, Order $order): JsonResponse
     {
-        if ($order->user_id !== auth()->id()) {
-            return response()->json([
-                'message' => 'Заказ не найден',
-            ], 404);
-        }
-
-        $order->load(['products', 'user']);
+        $order = $this->action->run($order);
 
         return response()->json(
             $this->fractal
