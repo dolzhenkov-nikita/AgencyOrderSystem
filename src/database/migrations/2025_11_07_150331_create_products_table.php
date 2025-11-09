@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("description")->nullable();
-            $table->string("cost")->nullable(); // Нулабл, если товары подарок
+            $table->integer("cost")->nullable(); // Нулабл, если товары подарок
             $table->softDeletes();
             $table->timestamps();
         });

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string $name
  * @property string|null $description
- * @property string|null $cost
+ * @property integer|null $cost
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
@@ -22,6 +22,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereUpdatedAt($value)
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product withoutTrashed()
  * @mixin \Eloquent
  */
 class Product extends Model
@@ -57,12 +62,12 @@ class Product extends Model
         $this->description = $description;
     }
 
-    public function getCost(): ?string
+    public function getCost(): ?int
     {
         return $this->cost;
     }
 
-    public function setCost(?string $cost): void
+    public function setCost(?int $cost): void
     {
         $this->cost = $cost;
     }

@@ -24,7 +24,7 @@ class CreateProductRequest extends FormRequest
         return [
             "name"=>"required|string",
             "description"=>"string",
-            "price"=>"required|integer"
+            "cost"=>"required|integer"
         ];
     }
 }
